@@ -5,7 +5,7 @@ info:
   description: |
     Converts text into Obsidian-ready Markdown with YAML front matter.
 servers:
-  - url: https://ebone89.github.io/OpenAi-API/docs
+  - url: https://ebone89.github.io/OpenAi-API
     description: GitHub Pages hosted API schema
 paths:
   /export:
