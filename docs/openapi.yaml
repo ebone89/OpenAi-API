@@ -2,9 +2,38 @@ openapi: 3.1.0
 info:
   title: "Obsidian Exporter API"
   version: "1.0.0"
+  description: |
+    Converts text into Obsidian-ready Markdown with YAML front matter.
 servers:
-  - url: https://username.github.io/your-repo/docs
+  - url: https://ebone89.github.io/OpenAi-API/docs
+    description: GitHub Pages hosted API schema
 paths:
   /export:
     post:
       summary: Convert text into Obsidian-ready Markdown
+      operationId: exportNote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - content
+              properties:
+                title:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+                content:
+                  type: string
+      responses:
+        "200":
+          description: Markdown output
+          content:
+            text/markdown:
+              schema:
+                type: string
