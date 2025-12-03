@@ -1,0 +1,62 @@
+openapi: 3.1.0
+info:
+  title: "Obsidian Exporter API"
+  version: "1.0.0"
+  description: |
+    Converts a ChatGPT response into an Obsidian-ready Markdown document.
+    Adds YAML front matter with metadata and returns valid `.md` content.
+servers:
+  - url: https://your-domain.com        # 👈 Replace with your real HTTPS domain
+    description: Production server for Obsidian Exporter
+
+paths:
+  /export:
+    post:
+      operationId: exportNote
+      summary: Convert text into Obsidian-ready Markdown
+      description: Takes plain text and wraps it with YAML front matter for use in Obsidian.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - content
+              properties:
+                title:
+                  type: string
+                  example: "My Research Note"
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example: ["biology", "genetics"]
+                content:
+                  type: string
+                  example: "This is a note about gene expression regulation."
+      responses:
+        "200":
+          description: Markdown response
+          content:
+            text/markdown:
+              schema:
+                type: string
+                example: |
+                  ---
+                  title: "My Research Note"
+                  tags: [biology, genetics]
+                  date: 2025-12-03
+                  ---
+
+                  This is a note about gene expression regulation.
+
+components:
+  schemas:
+    MarkdownResponse:
+      type: object
+      properties:
+        markdown:
+          type: string
+          description: Obsidian-ready Markdown file content
